@@ -19,3 +19,8 @@ repos:
         entry: uv run yamllint --strict
         language: system
         types: [yaml]
+      - id: gitleaks
+        name: gitleaks (block commits containing API keys or other secrets)
+        entry: make -s secrets-staged
+        language: system
+        pass_filenames: false

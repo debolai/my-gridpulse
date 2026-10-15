@@ -1,0 +1,23 @@
+---
+name: ci
+
+"on":
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read  # least privilege for the workflow token
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked      # fails if uv.lock is out of date
+      - run: make lint
+      - run: make test
